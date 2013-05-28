@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Climate Wizard</title>
+</head>
+
+  <script type="text/javascript"> 
+var qsParm = new Array();
+function qs() {
+var query = window.location.search.substring(1);
+var parms = query.split('&');
+for (var i=0; i<parms.length; i++) {
+var pos = parms[i].indexOf('=');
+if (pos > 0) {
+var key = parms[i].substring(0,pos);
+var val = parms[i].substring(pos+1);
+qsParm[key] = val;
+}
+}
+}
+qs();
+function navtoqs() {
+//alert(qsParm['link']);	
+window.open(qsParm['link'],"downloader");
+self.close();
+}
+</script>
+
+
+<body style="text-align:center">	
+
+<b>Terms of use agreement</b>
+<p>
+These data are for use in research projects only. A 'research project' is any project carried out by an individual or organized by a university, a scientific institute, or similar organization (private or public) for non-commercial research purposes only. Results based on these data must be submitted for publication in the open literature without any delay linked to commercial objectives. 
+"These data are licensed for use in Research Projects only. A 'Research Project' is any project organized by a university, a scientific institute, or similar organization (private or public), for non-commercial research purposes only. A necessary condition of the recognition of non-commercial purposes is that all the results obtained are openly available at delivery costs only, without any delay linked to commercial objectives, and that the research itself is submitted for open publication. 
+For more information see the <a target="_blank" href="FAQ.html">FAQs</a> I agree to the terms of use as stated above and have read and understand the information provided in the <a target="_blank" href="use_and_misuse.html">Use and Misuse of Climate Data and Analysis</a> document.
+</p>
+<p>
+    <input type="submit" name="okit" id="okit" value="OK" onclick="navtoqs()" /> 
+    <input type="submit" name="okit2" id="okit2" value="Close" onclick="self.close()"/>
+</p>
+</body>
+</html>

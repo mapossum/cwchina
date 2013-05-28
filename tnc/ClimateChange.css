@@ -1,0 +1,76 @@
+
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #E4E6D7;
+}
+
+.tundra .dijitSplitContainer-child, .tundra .dijitBorderContainer-child {
+    border: none;
+}
+
+.iconZoomIn {
+    width: 25px;
+    height: 25px;
+    background-repeat: no-repeat;
+    text-align: center;
+    background-image: url('./images/zoom-in.png');
+}
+
+.iconZoomOut {
+    width: 25px;
+    height: 25px;
+    background-repeat: no-repeat;
+    text-align: center;
+    background-image: url('./images/zoom-out.png');
+}
+
+.iconZoomInitial {
+    width: 25px;
+    height: 25px;
+    background-repeat: no-repeat;
+    text-align: center;
+    background-image: url('./images/zoom-initial.png');
+}
+
+.iconZoomFull {
+    width: 25px;
+    height: 25px;
+    background-repeat: no-repeat;
+    text-align: center;
+    background-image: url('./images/zoom-full-extent1.png');
+}
+
+.iconZoomPrev {
+    width: 25px;
+    height: 25px;
+    background-repeat: no-repeat;
+    text-align: center;
+    background-image: url('./images/backward.png');
+}
+
+.iconZoomNext {
+    width: 25px;
+    height: 25px;
+    background-repeat: no-repeat;
+    text-align: center;
+    background-image: url('./images/forward.png');
+}
+
+.iconZoomPan {
+    width: 25px;
+    height: 25px;
+    background-repeat: no-repeat;
+    text-align: center;
+    background-image: url('./images/pan.png');
+}
+
+.iconIdentify {
+    width: 24px;
+    height: 24px;
+    background-repeat: no-repeat;
+    text-align: center;
+    background-image: url('./images/identify-24x24.png');
+}

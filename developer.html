@@ -1,0 +1,106 @@
+<table width="100%" id="floater_options" style="font-size:11pt;padding:0;margin:0;">
+				<tr>
+				<td align="right">				
+						<a href="#" onclick="javascript:dijit.byId('dialogDevelopersLink').hide();">Close Dialog</a>
+				</td>
+				</tr>
+				<tr>                
+                    <th height="22" align="left" bgcolor="#A0C04D" class="boldsubs" scope="col">
+                        &nbsp;Current Climate Map Information
+                    </th>
+                </tr>
+				<tr>
+					<td align="left" valign="top" style="padding:10px 0 5px 0;border-bottom: 0px dashed #A0C04D;">
+					Details of the current map shown in Climate Wizard application 
+					<p>						
+						Service Name :   <code id="developer_serviceName" style="background-color:#DCDCDC;padding:2px 5px;font-size:11pt;"></code> 
+						&nbsp; | &nbsp;
+						Query String :   <code id="developer_mosaicName" style="background-color:#DCDCDC;padding:2px 5px;font-size:11pt;"></code>
+						<br/><br/>
+						Image Service URL : <code id="developer_imageServiceUrl" style="width:880px;margin:5px 0 10px 0;background-color:#DCDCDC;padding:8px 5px;font-size:11pt;overflow:auto;display:block;"></code> 
+						
+						Map Service URL : (<a style="" id="developer_arcgisdotcomlink" href="#" target="_blank" title="View this climate map in ArcGIS.com map viewer">View in ArcGIS.com</a>)
+						<code id="developer_mapServiceUrl" style="width:880px;margin:5px 0 10px 0;background-color:#DCDCDC;padding:8px 5px;font-size:11pt;overflow:auto;display:block;"></code> 
+						
+						Legend URL : <code id="developer_legendUrl" style="width:880px;margin:5px 0 5px 0;background-color:#DCDCDC;padding:8px 5px;font-size:11pt;overflow:auto;height:35px;display:block;overflow-Y:hidden;"></code> 					
+					</p>		
+						
+					</td>
+				</tr>
+				<tr>
+					<th height="22" align="left" bgcolor="#A0C04D" class="boldsubs" scope="col">
+						&nbsp;Consuming Services
+					</th>
+				</tr>
+				<tr>
+					<td align="left" valign="top" style="padding:10px 0 5px 0;border-bottom: 1px dashed #A0C04D;">					
+					<p>
+					Climate Wizard datasets are exposed restfully using ArcGIS Server. You can consume the climate wizard data either as an ArcGIS Image Service 
+					or as an ArcGIS Map Service. In both these approaches you would need at a minimum an unique query string to be a part of the 
+					request (either as a part of the URL in case of MapServer or as a value to the mosaic name attribute in case of ImageServer). 
+					This query string directly corresponds to the option available on the Climate Wizard app, since there are numerous combinations possible, 
+					you can use this handy <a href="/docs/Climate_Wizard_Query_Ref.pdf" target="_blank" title="Link opens in new window">query reference documentation (PDF)</a> that lists all the possible values that 
+					one could use to construct the query string either manually or programatically.
+					</p>
+					<p>
+					If you want to browse through the list of services and information of each of the service, here is a link to the <a target="_blank" title="Link opens in new window" href="http://www.climatewizard.org/ArcGIS/rest/services">ArcGIS Restful Services Directory</a>.
+					</p>
+					</td>
+				</tr>
+                <tr>
+                    <td align="left" valign="top" style="padding:5px 0 5px 0;border-bottom: 1px dashed #A0C04D;">
+						<b>Option 1. Image Services (Preferred approach)</b>
+						<p>ArcGIS Image service can be consumed using custom applications built using any of the ArcGIS Server APIs, such as the Climate Wizard app. This is the preferred approach and is the best (and fastest) way to access the climate wizard data. This approach also brings in a challenge of posting long URL's with 
+						lots of parameters and in most cases this would need a developer to use the API and send these parameters along.
+					</p>
+						<p>
+							Here is a sample request (URL encoded)
+							<code style="width:880px;background-color:#DCDCDC;padding:8px 5px;font-size:11pt;display:block;margin:5px 0 10px 0;overflow:auto;">
+							http://www.climatewizard.org/ArcGIS/rest/services/TNC/US3Band/ImageServer/exportImage?size=668%2C495&format=png&transparent=true&noData=0&interpolation=RSP_NearestNeighbor&imageSR=102113&bboxSR=102113&bbox=-13934843.666294016%2C2146699.2774890885%2C-7399171.999800042%2C6989749.389636569&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicAttribute%22%2C%22where%22%3A%22Name%20%3D%20'c_ensemble_50_a2_tmean_14_2070_2099'%22%2C%22sortField%22%3A%22Name%22%7D&f=image
+							</code>	
+							The above long request is made up of two parts. URL to the Rest Endpoint : 
+							<code style="width:880px;background-color:#DCDCDC;padding:8px 5px;font-size:11pt;display:block;margin:5px 0 10px 0;overflow:auto;">
+							http://www.climatewizard.org/ArcGIS/rest/services/TNC/US3Band/ImageServer/exportImage?
+							</code>
+							Parameters sent:
+							<code style="width:880px;background-color:#DCDCDC;padding:8px 5px;font-size:11pt;display:block;margin:0;overflow:auto;">
+size:668,495<br/>
+format:png<br/>
+transparent:true<br/>
+noData:0<br/>
+interpolation:RSP_NearestNeighbor<br/>
+imageSR:102113<br/>
+bboxSR:102113<br/>
+bbox:-13934843.666294016,2146699.2774890885,-7399171.999800042,6989749.389636569<br/>
+mosaicRule:{"mosaicMethod":"esriMosaicAttribute",
+	"where":"Name = 'c_ensemble_50_a2_tmean_14_2070_2099'","sortField":"Name"
+		}<br/>
+f:image
+</code>
+						</p>
+					</td>
+                </tr>				 
+                 <tr>                 	 
+                    <td align="left" valign="top" style="padding:5px 0 10px 0;border-bottom: 1px dashed #A0C04D;">
+						<b>Option 2. Map Service : </b>   
+						<p>
+						This custom application (<a href="/translator/" target="_blank" title="Link opens in a new window">Translator</a>) allows you to access Climate Wizard Images service as a Map Service. This option could be used if Option 1 of using Image services is not suitable.
+						The use cases for using this approach would be to use climate wizard services in clients which cannot consume or support Image services with custom attributes (Example: ArcGIS.com, ArcGIS on iPhone). You could also register these links in
+						ArcGIS.com as items so that others could search and add these services directly from ArcGIS.com and build great mashups.
+						</p>
+						<p>
+						Think of this as a map url shortner which helps to tranlate between a short map service url into a rather complex and long image service url. This is being used in the Climate Wizard app in the "View in ArcGIS.com" link.
+						</p>	
+						Sample Request (same map as above)
+						<code style="width:880px;background-color:#DCDCDC;padding:8px 5px;font-size:11pt;display:block;margin:5px 0px 10px 0;overflow:auto;">
+						http://www.climatewizard.org/translator/US3Band/c_ensemble_50_a2_tmean_14_2070_2099/MapServer
+						</code>
+						To use this just copy the map server link listed in the section "Current Climate Map Information" or to learn more use this link <a href="/translator/" target="_blank" title="Link opens in a new window">Translator</a>
+                    </td>
+                 </tr>	
+					<tr>
+					<td style="text-align:center;padding:10px 0;">
+						<a href="#" onclick="javascript:dijit.byId('dialogDevelopersLink').hide();">Close Dialog</a>
+					</td>
+					</tr>
+</table>

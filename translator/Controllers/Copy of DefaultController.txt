@@ -1,0 +1,201 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using System.Web.Routing;
+using System.Web.Script.Serialization;
+using System.Net;
+using Translator.Models;
+using System.IO;
+
+namespace Translator.Controllers
+{
+    public class DefaultController : Controller
+    {
+        //
+        // GET: /Default/
+
+        string baseExportURL = "http://174.129.35.252/ArcGIS/rest/services/TNC/US3Band/ImageServer/exportImage";
+        string mapAuthor = "Climate Wizard";
+        string mapTitle = "US3Band";
+        string mapKeywords = "climate,climate wizard,temperature,precipitation,global warming";
+        string mapComments = "For more information visit http://www.climatewizard.org.";
+
+        public ActionResult Index(string f, string callback)
+        {
+            string service="", param="";
+
+            if (RouteData.Values["service"] != null)
+            {
+                service = RouteData.Values["service"].ToString().Trim();
+            }
+
+            if (RouteData.Values["param"] != null)
+            {
+                param = RouteData.Values["param"].ToString().Trim();                
+            }
+
+            if (!String.IsNullOrWhiteSpace(param) && !String.IsNullOrWhiteSpace(service))
+            {
+                return GetServiceDef(callback);
+            }
+
+            return View(); //html            
+        }
+
+        public ActionResult Error()
+        {
+            return View();
+        }
+
+        public string ExportImage(string f, string size, string bbox, string bboxSR, string imageSR, string callback)
+        {
+            if (String.IsNullOrWhiteSpace(f) || String.IsNullOrWhiteSpace(bbox))
+            {
+                return "Error - request parameters missing (required: f,size,bbox,bboxSR,imageSR)";
+            }
+
+            string where = "c_ensemble_50_a2_tmean_14_2070_2099"; //default
+
+            if (RouteData.Values["param"] != null)
+            {
+                where = RouteData.Values["param"].ToString().Trim();
+            }
+
+            string mosaicRule = "mosaicRule={\"mosaicMethod\":\"esriMosaicAttribute\",\"where\":\"Name = '" + where + "'\",\"sortField\":\"Name\"}";
+
+            string defaultParams = "noData=0&interpolation=RSP_NearestNeighbor&format=png";
+
+            //string queryparams = Request.Url.Query.ToString();
+            string queryParams = "?size=" + size + "&imageSR=" + imageSR + "&bboxSR=" + bboxSR + "&bbox=" + bbox;
+
+            if (!String.IsNullOrWhiteSpace(f) && f.Trim().Equals("image", StringComparison.InvariantCultureIgnoreCase))
+            {
+               
+                //return baseExportURL + Request.Url.Query.ToString() + "&" + defaultattributes + "&" + imageparam;
+                //return baseExportURL + queryparams + "&" + defaultattributes + "&" + imageparam;
+
+                string imageUrl = baseExportURL + queryParams + "&" + "f=image&" + defaultParams + "&" + mosaicRule;
+
+                //Now go and get the image bytes
+                const int BUFFER_SIZE = 1024 * 1024;
+                var req = WebRequest.Create(imageUrl);
+                Response.ContentType = "image/png";
+                Response.StatusCode = 200;
+                using (var resp = req.GetResponse())
+                {
+                    using (var stream = resp.GetResponseStream())
+                    {   
+                        var bytes = new byte[BUFFER_SIZE];
+                        while (true)
+                        {
+                            var n = stream.Read(bytes, 0, BUFFER_SIZE);
+                            if (n == 0)
+                            {
+                                break;
+                            }
+                            Response.OutputStream.Write(bytes, 0, n);
+                        }
+                    }
+                }
+            } 
+            else if (!String.IsNullOrWhiteSpace(f) && f.Trim().Equals("json", StringComparison.InvariantCultureIgnoreCase))
+            {
+                string exporturl = baseExportURL + queryParams + "&" + "f=json&" + defaultParams + "&" + mosaicRule;
+                //Now go and get the json response               
+                var req = WebRequest.Create(exporturl);
+                Response.ContentType = "text/plain";
+                Response.StatusCode = 200;
+                using (var resp = req.GetResponse())
+                {
+                    using (var sr = new StreamReader(resp.GetResponseStream()))
+                    {
+                        string jsonResponse = sr.ReadToEnd();
+
+                        if (!String.IsNullOrWhiteSpace(callback))
+                        {
+                            return String.Format("{0}({1});", callback, jsonResponse);                         
+                        }
+                        else
+                        {
+                            return jsonResponse;
+                        }                        
+                    }
+                }
+            }
+            else
+            {
+                //return Json(new RestTemplates.RequestError { });
+                return "Error - request parameters missing (required: size,bbox,bboxSR,imageSR)";
+            }
+
+            return "";
+        }
+        
+        private ActionResult GetServiceDef(string callback)
+        {
+            var serviceDef = new ServiceDefinition(mapTitle, mapKeywords, mapAuthor, mapComments);
+
+            if (String.IsNullOrWhiteSpace(callback))
+            {
+                //return Json(new RequestError(), JsonRequestBehavior.AllowGet);
+                return Json(serviceDef, JsonRequestBehavior.AllowGet);
+            }
+
+            JavaScriptSerializer javaScriptSerializer = new JavaScriptSerializer();            
+            string tosend = callback + "(" + javaScriptSerializer.Serialize(serviceDef) + ")";
+            return Content(tosend);
+            //return Json(new ServiceDefinition{},JsonRequestBehavior.AllowGet);
+            //return Json(JavaScript(tosend), JsonRequestBehavior.AllowGet);
+        }        
+        
+    }
+   
+
+    [Serializable]
+    public class ServiceDefinition
+    {
+        private List<RestTemplates.ServiceLayer> _serviceLayers = new List<RestTemplates.ServiceLayer>();
+
+        private string _title;
+        private string _keywords;
+        private string _author;
+        private string _comments;
+
+        public ServiceDefinition()
+        {
+            _title = "";
+            _keywords = "";
+        }
+
+        public ServiceDefinition(string title, string keywords, string author, string comments)
+        {
+            _serviceLayers.Add(new RestTemplates.ServiceLayer());
+            _title = title;
+            _keywords = keywords;
+            _author = author;
+            _comments = comments;
+        }
+
+        public double currentVersion { get { return 10.01; } }
+        public string serviceDescription { get { return ""; } }
+        public string mapName { get { return _title; } }
+        public string description { get { return ""; } }
+        public string copyrightText { get { return "Climate Wizard"; } }
+        public RestTemplates.ServiceLayer[] layers { get { return _serviceLayers.ToArray(); } }
+        //public ServiceLayer layers { get { return new ServiceLayer(); } }
+        public RestTemplates.SpatialRef spatialReference { get { return new RestTemplates.SpatialRef { wkid = 4326 }; } }
+        public bool singleFusedMapCache { get { return false; } }
+
+        public RestTemplates.ServiceExtent initialExtent { get { return new RestTemplates.ServiceExtent(); } }
+        public RestTemplates.ServiceExtent fullExtent { get { return new RestTemplates.ServiceExtent(); } }
+        public string units { get { return "esriDecimalDegrees"; } }                      
+        
+        public string supportedImageFormatTypes { get { return "PNG"; } }
+        public RestTemplates.DocumentInfo documentInfo { get { return new RestTemplates.DocumentInfo { title=_title, Keywords=_keywords, Author=_author,Category="", Comments=_comments,Subject=_title}; } }
+        public string capabilities { get { return "Map"; } }
+    }
+
+
+}

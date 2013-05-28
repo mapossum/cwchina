@@ -1,0 +1,86 @@
+﻿@{
+    ViewBag.Title = "Translator - Home";
+    //var hostName = Request.Headers["host"];
+    var baseURL = "http://" + Request.Headers["host"];
+}
+<h1 style="text-align: center;">
+    ClimateWizard Image services URL shortner</h1>
+<p>
+    This app allows you to access Climate Wizard Images services exposed as an Map Service
+    instead of the default Image Service. The usecases for using this approach would
+    be to still use climate wizard services in client which cannot consume Image services
+    with custom attributes (Example: ArcGIS.com).</p>
+<p>
+    Think of this as a map url shortner which helps to tranlate between a simple looking
+    Map Service url into a rather complex and long Image Service url.
+</p>
+<hr />
+<h2>
+    Endpoints</h2>
+<li>{service}/{query_combination}/MapServer (f=json)</li>
+<li>{service}/{query_combination}/MapServer/export (f=image|f=json)</li>
+<li>{service}/{query_combination}/MapServer/legend (f=image|f=json)</li>
+<hr />
+<h2>
+    Usage: {service}/{query_combination}/MapServer</h2>
+<p>
+    Service can be either <b>US3Band</b> or <b>Global3Band</b></p>
+<p>
+    Query combination follows this pattern : <b><i>mapOption_CirculationModel_emissionScenario_climateVariable_timeOfYear_timePeriod</i></b>.
+    <br />
+    Example: m_ cccma_cgcm3_1.1_a2_tmean_14_2040_2060</p>
+<p>
+    This query combination directly corresponds to the option available on the Climate
+    Wizard app, since there are numerous combinations possible, you can use this handy
+    <a href="http://www.climatewizard.org/docs/Climate_Wizard_Query_Ref.pdf" target="_blank"
+        title="Link opens in new window">query reference documentation (PDF)</a> that
+    lists all the possible values that one could use to construct the query string either
+    manually or programatically.</p>
+<h4>
+    Samples (United States)</h4>
+<ul>
+    <li><a href="@baseURL@Url.Content("~/US3Band/c_ensemble_50_a2_tmean_14_2070_2099/MapServer")">
+        Ensemble End Century Avg Temp Change</a> (<a href="http://www.arcgis.com/home/webmap/viewer.html?url=@baseURL@Url.Content("~/US3Band/c_ensemble_50_a2_tmean_14_2070_2099/MapServer")" target="_blank">View
+            in ArcGIS.com</a>)</li>
+    <li><a href="@baseURL@Url.Content("~/US3Band/c_ensemble_50_a2_pptPct_14_2070_2099/MapServer")">
+        Ensemble End Century Percipitation Change</a> (<a href="http://www.arcgis.com/home/webmap/viewer.html?url=@baseURL@Url.Content("~/US3Band/c_ensemble_50_a2_pptPct_14_2070_2099/MapServer")" target="_blank">View
+            in ArcGIS.com</a>)</li>
+</ul>
+<h4>
+    Samples (Global)</h4>
+<ul>
+    <li><a href="@baseURL@Url.Content("~/Global3Band/c_ensemble_50_a2_tmean_14_2070_2099/MapServer")">
+        Ensemble End Century Avg Temp Change</a> (<a href="http://www.arcgis.com/home/webmap/viewer.html?url=@baseURL@Url.Content("~/Global3Band/c_ensemble_50_a2_tmean_14_2070_2099/MapServer")" target="_blank">View
+            in ArcGIS.com</a>)</li>
+    <li><a href="@baseURL@Url.Content("~/GlobalBand/c_ensemble_50_a2_pptPct_14_2070_2099/MapServer")">
+        Ensemble End Century Percipitation Change</a> (<a href="http://www.arcgis.com/home/webmap/viewer.html?url=@baseURL@Url.Content("~/Global3Band/c_ensemble_50_a2_pptPct_14_2070_2099/MapServer")" target="_blank">View
+            in ArcGIS.com</a>)</li>
+</ul>
+<hr />
+<h2>
+    Behind the scenes</h2>
+<h3>
+    Flow</h3>
+MapService URL (Request) -> Translator -> Image Service URL with custom parameters
+-> JSON or Image (Response)
+<h3>
+    Sample Request/Response: Export Image request as JSON sample
+</h3>
+Request: <code>http://www.climatewizard.org/translator/US3Band/c_ensemble_50_a2_tmean_14_2070_2099/MapServer/export?f=json
+</code>Translated to: <code>http://www.climatewizard.org/ArcGIS/rest/services/TNC/US3Band/ImageServer/exportImage?size=668%2C495&format=png&transparent=true&noData=0&interpolation=RSP_NearestNeighbor&imageSR=102113&bboxSR=102113&bbox=-14013115.183258016%2C2146699.2774890885%2C-7477443.516764042%2C6989749.389636569&mosaicRule=%7B%22mosaicMethod%22%3A%22esriMosaicAttribute%22%2C%22where%22%3A%22Name%20%3D%20'c_ensemble_50_a2_tmean_14_2070_2099'%22%2C%22sortField%22%3A%22Name%22%7D&f=json
+</code>Response:
+<pre><code>{ 
+    href: "http://ec2-174-129-35-252.compute-1.amazonaws.com/arcgisoutput/_ags_301413356.png",
+    width: 668,
+    height: 495,
+    extent: { 
+                xmin: -14013115.183258, 
+                ymin: 2146699.27748909, 
+                xmax: -7477443.51676404,
+                ymax: 6989749.38963657,
+                spatialReference: { wkid: 102113}
+            },
+    scale: 0
+} </code>
+</pre>
+<hr />

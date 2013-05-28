@@ -1,0 +1,100 @@
+img {
+    border: 0;
+    vertical-align: middle;
+}
+
+a {
+    color: #317486;
+    background: inherit;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #808080;
+    background: inherit;
+}
+
+#logo {
+    /*height: 200px;*/
+    margin: 0 auto;
+    padding: 0;
+    width: 100%;
+    text-align: left;
+    font-size: 30pt;
+	color:#00703C;
+	background-color: #E4E6D7;
+}
+
+#logo a {
+    font-size: 30pt;
+    color: #eee;
+    text-decoration: none;
+}
+
+#apps {    
+	margin-top: 0px;
+    /*padding: 0 15px 0 15px;   
+    width: 920px;
+*/
+    font-size: 1.4em;
+}
+
+#apps a {
+    color: #444;
+    font-size: 1.2em;
+}
+
+#apps a:hover {
+    background: #EFFCFF;
+    color: #317486;
+}
+
+#apps h2 {
+    border-bottom: 1px solid #ccc;
+    padding: 0 0 8px;
+}
+
+#apps p {
+    min-height: 150px;
+    clear: both;
+    /*border-bottom: 1px dashed #ddd;*/
+    margin: 20px 0 20px 0;
+    padding: 10px;
+    font: 12pt Verdana, Arial, "Trebuchet MS", Tahoma, sans-serif;
+    line-height: 1.4em;
+    color: #444;
+	background-color:#fff;
+}
+
+#apps p a img {
+    float: left;
+}
+
+.tags {
+    margin-top: 10px;
+    color: #bbb;
+    font-size: 9pt;
+    display: block;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    border: 0; /* This removes the border around the viewport in old versions of IE */
+    width: 100%;
+    height: 100%;
+    font-family: Verdana;
+    background: #fff;
+    font-size: 12pt;
+    /*background: url(images/teaserbg.jpg) repeat-x;*/
+}
+
+#container {
+    width: 955px;
+    height: 100%;    
+    margin: 0 auto;   
+	padding:20px;
+	background-color: #E4E6D7; 
+}
+
+

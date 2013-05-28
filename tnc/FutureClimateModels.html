@@ -1,0 +1,188 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content= "text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=7" />
+    <title>Future Climate Models</title>
+    <link rel="stylesheet" type="text/css" href="FutureClimateModels.css">
+    <link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/1.5/js/dojo/dijit/themes/nihilo/nihilo.css">
+    <link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/1.5/js/dojo/dojox/layout/resources/GridContainer.css">
+    <link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/1.5/js/dojo/dojox/layout/resources/DndGridContainer.css">
+    <link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/1.5/js/dojo/dojox/layout/resources/ExpandoPane.css">
+    <link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/1.5/js/dojo/dojox/form/resources/CheckedMultiSelect.css">
+    <script type="text/javascript">
+      var djConfig = {
+        parseOnLoad: true
+      }
+    </script>
+    <script type="text/javascript" src="http://serverapi.arcgisonline.com/jsapi/arcgis/?v=1.5"></script>
+    <script type="text/javascript" src="./resources/ClimateModelsInfo.js"></script>
+    <script type="text/javascript" src="./resources/APLClimateChangeLayer.js"></script>
+    <script type="text/javascript" src="./GetCellValuesDijit/GetCellValues.js"></script>
+    <script type="text/javascript" src="FutureClimateModels.js"></script>
+    <script type="text/javascript">
+      dojo.require("dijit.TitlePane");
+      dojo.require("dijit.Toolbar");
+      dojo.require("dijit.Dialog");
+      dojo.require("dijit.form.CheckBox");
+      dojo.require("dijit.layout.TabContainer");
+      dojo.require("dijit.layout.BorderContainer");
+      dojo.require("dijit.layout.ContentPane");
+      dojo.require("dojox.form.CheckedMultiSelect");
+      dojo.require("dojox.layout.GridContainer");
+      dojo.require("dojox.layout.ExpandoPane");
+      dojo.require("dojo.parser");
+    </script>
+  </head>
+  <body class="nihilo">
+    <div id="mainWindow" dojotype="dijit.layout.BorderContainer" design="headline" gutters="false" style="width:100%; height:100%;">
+      <div id="header" dojotype="dijit.layout.BorderContainer" region="top" design="headline" gutters="false" style="height:90px; padding:3px;">
+        <div id="headerImage" dojotype="dijit.layout.ContentPane" region="left" style="padding:5px;">
+          <img src="./images/TNCLogo2.gif" title="The Nature Conversancy" height="60px" style="cursor:pointer;" onclick="window.open('http://www.tnc.org/');"/>
+        </div>
+        <div dojotype="dijit.layout.ContentPane" region="center" style="padding-top:15px; overflow:hidden;">
+          <span>Future Climate Models</span>
+          <br/>
+          <span style="font-size:small;">TNC and ESRI</span>
+        </div>
+        <div dojotype="dijit.layout.BorderContainer" region="right" design="sidebar" gutters="false" style="width:200px;">
+          <div dojotype="dijit.layout.ContentPane" region="top" style="padding-top:5px;">
+            <img src="./images/Univ_Wash_logo.png" height="30px" title="University of Washington" style="cursor:pointer;" onclick="window.open('http://www.washington.edu/');"/>
+          </div>
+          <div dojotype="dijit.layout.ContentPane" region="bottom">
+            <img src="./images/Univ_SMiss_logo.png" height="30px" title="University of Sourthern Mississippi" style="cursor:pointer;" onclick="window.open('http://www.usm.edu/index.php');"/>
+          </div>
+          <div dojotype="dijit.layout.ContentPane" region="left" style="padding-top:15px;">
+            <img src="./images/esri.gif" title="ESRI" height="50px" style="cursor:pointer;" onclick="window.open('http://www.esri.com/');"/>
+          </div>
+        </div>
+      </div>
+      <div id="centerPane" dojotype="dijit.layout.BorderContainer" region="center" gutters="true" style="overflow:hidden;">
+        <div dojotype="dijit.layout.ContentPane" region="top" style="height:65px;" style="overflow:hidden;">
+          <table cellpadding="0" bordercolor="#e3e3e3" border="0" bgcolor="#E4E6D7" width="100%" style="font-size:small; color:seagreen;">
+            <tbody>
+              <tr>
+                <th align="center" width="25%">Analysis Area</th>
+                <th align="center" width="25%">Time Period</th>
+                <th align="center" width="25%">Map Options</th>
+                <th align="center" width="25%">Measurement</th>
+              </tr>
+            </tbody>
+          </table>
+          <table id="inputsTable" border="0" width="100%" bgcolor="whitesmoke" style="font-size:small;">
+            <tbody>
+              <tr valign="top">
+                <th align="center" width="25%" valign="top">
+                  <div style="text-align:left; margin-left:30%;">
+                    <input id="usarea" type="radio" dojoType="dijit.form.RadioButton" onchange="changemap();" checked="true" onclick="changemap();" name="AnalyisArea" value="AR4_US_12k"/>
+                    <label for="usarea">United States</label>
+                    <br/>
+                    <input id="intarea" type="radio" dojoType="dijit.form.RadioButton" onchange="changemap();" onclick="changemap();" name="AnalyisArea" value="AR4_Global_50k"/>
+                    <label for="intarea">Global</label>
+                  </div>
+                </th>
+                <th align="center" width="25%" valign="top">
+                  <div style="text-align:left; margin-left:30%;">
+                    <input id="mid" type="radio" dojoType="dijit.form.RadioButton" onchange="changemap();" onclick="changemap();" value="2040_2069" name="TimePeriod"/>
+                    <label for="mid">Mid Century (2050s)</label>
+                    <br/>
+                    <input id="end" type="radio" dojoType="dijit.form.RadioButton" onchange="changemap();" onclick="changemap();" checked="true" value="2070_2099" name="TimePeriod"/>
+                    <label for="end">End Century (2080s)</label>
+                  </div>
+                </th>
+                <th align="center" width="25%" valign="top">
+                  <div style="text-align:left; margin-left:30%;">
+                    <input id="mapaverage" type="radio" dojoType="dijit.form.RadioButton" onchange="changemap();" onclick="changemap();" name="MapOption" value="mean"/>
+                    <label for="mapaverage">Map of Average</label>
+                    <br/>
+                    <input id="mapdifference" type="radio" dojoType="dijit.form.RadioButton" onchange="changemap();" onclick="changemap();" checked="true" name="MapOption" value="depart_change"/>
+                    <label for="mapdifference">Map of Change</label>
+                  </div>
+                </th>
+                <th align="center" width="25%" valign="top">
+                  <div style="text-align:left; margin-left:30%;">
+                    <input id="averagetemp" type="radio" dojoType="dijit.form.RadioButton" onchange="changemap();" onclick="changemap();" checked="checked" name="Measurement" value="tmean"/>
+                    <label for="averagetemp">Average Temperature</label>
+                    <br/>
+                    <input id="precip" type="radio" dojoType="dijit.form.RadioButton" onchange="changemap();" onclick="changemap();" name="Measurement" value="pptPct"/>
+                    <label for="precip">Precipitation</label>
+                  </div>
+                </th>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div id="leftExpandoPane" title="Climate Models" dojoType="dojox.layout.ExpandoPane" region="left" splitter="true" style="width:180px;" easeIn="dojo.fx.easing.backOut" easeOut="dojo.fx.easing.backInOut" duration="1500" style="overflow:auto;">
+          <div dojoType="dijit.layout.ContentPane" style="background-color:whitesmoke;">
+            <div id="allModelsList" dojoType="dojox.layout.GridContainer" nbZones="1" opacity="0.5" allowAutoScroll="false" hasResizableColumns="false" withHandles="true" acceptTypes="dijit.TitlePane" style="font-size:small; overflow:auto;"></div>
+          </div>
+        </div>
+        <div id="rightExpandoPane" title="Cycle" dojoType="dojox.layout.ExpandoPane" region="right" splitter="true" style="width:120px;" easeIn="dojo.fx.easing.backOut" easeOut="dojo.fx.easing.backInOut" duration="1500" style="overflow:auto;">
+          <select id="cycleList" title="Cycle" dojoType="dojox.form.CheckedMultiSelect" style="height:100%;width:100%; padding:5px; font-size:smaller; background-color:whitesmoke;" onchange="changemap();" name="cycledropdown">
+            <option value="14">Annual</option>
+            <option value="15">Dec - Feb</option>
+            <option value="16">Mar - May</option>
+            <option value="17">June - Aug</option>
+            <option value="18">Sept - Nov</option>
+            <option value="1">January</option>
+            <option value="2">February</option>
+            <option value="3">March</option>
+            <option value="4">April</option>
+            <option value="5">May</option>
+            <option value="6">June</option>
+            <option value="7">July</option>
+            <option value="8">August</option>
+            <option value="9">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+          </select>
+        </div>
+        <div dojoType="dijit.layout.ContentPane" region="center" style="padding:0px !important;">
+          <div id="displayModels" dojoType="dojox.layout.GridContainer" nbZones="3" opacity="0.5" allowAutoScroll="true" hasResizableColumns="false" withHandles="false" acceptTypes="dijit.TitlePane" style="height:50%;"></div>
+        </div>
+        <div id="infoPane" dojotype="dijit.layout.ContentPane" region="bottom" splitter="true" style="height:25px; padding:5px; text-align:center; background-color:#E4E6D7">.:-:.</div>
+      </div>
+      <div id="previewDlg" dojotype="dijit.Dialog" title="Preview" draggable="false" style="width:775px; height:575px; overflow:hidden;">
+      <div id="previewTabContainer" dojotype="dijit.layout.TabContainer" style="width:755px; height:525px;">
+        <div title="Map" id="previewMapPaneContainer" dojotype="dijit.layout.BorderContainer" design="headline" gutters="false">
+          <div id="previewMapToolbar" dojoType="dijit.Toolbar" region="top" style="text-align:center;">
+            <div id="previewMapZoomFull" dojoType="dijit.form.Button" iconClass="iconZoomFull" label="Zoom Full"></div>
+            <div id="previewMapIdentify" dojoType="dijit.form.Button" iconClass="iconIdentify" label="Get Values"></div>
+          </div>
+          <div id="previewMapPane" dojotype="dijit.layout.ContentPane" region="center" title="Map"></div>
+          <div dojotype="dijit.layout.ContentPane" region="right" style="width:125px">
+            <img id="previewMapLegend" src="" align="absmiddle" width="100%" height="100%" />
+          </div>
+        </div>
+        <div id="timeSeriesPane" dojotype="dijit.layout.BorderContainer" title="Time Series">
+          <div dojoType="dijit.layout.ContentPane" region="top" style="height:60px; padding:5px;">
+            <div id="animationSlider" dojoType="dijit.form.HorizontalSlider" showButtons="true" value="1" minimum="1" maximum="12" discreteValues="12" intermediateChanges="true" onChange="setCurrentSubLayer(this.scenarioOptions,arguments[0]);" style="width:80%; margin: 5px 40px; 5px 40px;">
+              <div dojoType="dijit.form.HorizontalRuleLabels" container="topDecoration" labels="January,December" style="height:1.2em;font-size:80%;"></div>
+              <div dojoType="dijit.form.HorizontalRule" id="sliderRule" container="bottomDecoration" count="12" style="height:8px;"></div>
+              <ol dojoType="dijit.form.HorizontalRuleLabels" container="bottomDecoration" style="height:1em;font-size:75%;">
+                <li></li>
+                <li>Feb</li>
+                <li>Mar</li>
+                <li>Apr</li>
+                <li>May</li>
+                <li>Jun</li>
+                <li>Jul</li>
+                <li>Aug</li>
+                <li>Sep</li>
+                <li>Oct</li>
+                <li>Nov</li>
+                <li></li>
+              </ol>
+            </div>
+          </div>
+          <div id="timeSeriesDiv" dojotype="dijit.layout.ContentPane" region="center" style="overflow:hidden;">
+            <img id="timeSeries" src="" align="absmiddle" width="100%" height="100%" />
+          </div>
+        </div>
+        <div dojotype="dijit.layout.BorderContainer" title="Static" style="overflow:hidden; font-size:small;">          
+          <div id="staticPane" dojoType="dijit.layout.ContentPane" region="center" style="overflow:hidden;"></div>
+        </div>
+      </div>
+      </body>
+    </html>

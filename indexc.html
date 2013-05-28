@@ -1,0 +1,276 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no"/>
+		<title>Climate Wizard - China</title>
+		<link href="http://fonts.googleapis.com/css?family=Josefin+Slab:400,700" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" type="text/css" href="css/site.css">
+
+		<script>
+			var dojoConfig = {
+				isDebug : false,
+				parseOnLoad : true
+			};
+
+		</script>
+
+		<link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/2.8/js/dojo/dijit/themes/claro/claro.css">
+	</head>
+	<body class='claro transitions'>
+		<div id="preloader" style="opacity:0.96; display:none">
+			<div class="round shadow" id="preloader_content">
+				<table style="width:100%;position: relative">
+					<tr>
+						<td> <span class="" style="font-size:32px;display:block;">Range Shift Wizard</span>
+							 <span class="" style="font-size:16px;font-weight:400;display:block;"> Mapping future climate-induced changes to bird, amphibian, and mammal distributions in the Western Hemisphere </span>
+						<div class="hline">
+						</div> </td>
+					</tr>
+					<tr>
+						<td style="text-align: left;font-family:'Helvetica Neue', Helvetica, Arial">						
+						The maps available as part of the Range Shift Wizard are based on projected changes in the areas that are likely to be climatically for individual species. Projections are derived from correlative bioclimatic models—also referred to as niche models—that relate a single species' distributions to recent climatic conditions. These models are then applied to projected future climatic conditions to determine what areas will likely be climatically suitable for a species in the future. All maps presented here were based on models that could accurately predict species current distributions when the models were applied to a test dataset that was not used in model building. Nonetheless, these models are likely to capture actual species' climatic requirements to different degrees. For example, these models are based on current species ranges and thus if a species has been extirpated from much of its historical range, these models will be unable to represent all of the climatic conditions in which a species can exist. Similarly, these models do not address interactions between species that may help define distributions, they do not address the ability of some species to evolve in the face of climate change, and they do not address the ability of species to disperse to newly suitable climates. Despite these limitations, these models provide a first approximation of how many species will likely respond to projected climatic changes. Thus, although they cannot give us an accurate picture of where a specific species will be in 50 years, they can give us an idea of how different species might respond to climate change and how faunas might be altered. For a detailed description of the study that produced these models please see: <a href="http://depts.washington.edu/landecol/PDFS/turnover.pdf" target="_blank">http://depts.washington.edu/landecol/PDFS/turnover.pdf</a>
+						<p style="text-align: left;">
+							Support for this project was provided by the David H. Smith Conservation Fellowship Program, the U.S. Geological Survey Earth Surface Dynamics Program, and Environment Cananda. We acknowledge the modeling groups, the Program for Climate Model Diagnosis and Intercomparison (PCMDI), and the WCRP’s Working Group on Coupled Modelling (WGCM) for their roles in making available the WCRP CMIP3 multi-model data set. Support of this data set is provided by the Office of Science, U.S. Department of Energy. We thank Janice Chanson, Timothy Boucher, and Michael Lannoo for providing species distribution data.
+						</p>
+						<div class="hline">
+						</div> </td>
+					</tr>
+					<tr>
+						<td> <img style="padding:10px;width:160px;vertical-align:top;vertical-align:top;" src="images/logos/TNCLogoPrimary_CMYK.png"/> <img style="padding:10px;width:190px;vertical-align:top;" src="images/logos/Env_Canada_logo.gif" /> <img style="padding:10px;width:190px;vertical-align:top;" src="images/logos/uw-logo-sm.png" /> <img style="padding:10px;width:123px;vertical-align:top;" src="images/logos/esri_logo_transparent.png" /></td>
+					</tr>
+					<tr style="position:relative;height:50px;">
+						<td style="vertical-align: bottom;text-align: right;position: relative;">
+						<input id="preloader_button" type="button" class='round shadow' align="right" style="position:absolute;right:0px;bottom:0px;display:none;background-color:#276097;color:white; border:none; cursor:pointer;font-size:20px;padding:10px;" onclick="hideLoader()" value="Explore the Map">
+						<img id="preloader_loading_image" src="images/loading6.gif" style="position:absolute;left:0px;bottom:0px;"/> </td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		
+		
+		<div id="mainWindow" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="design:'headline',gutters:false" style="width: 100%; height: 100%; margin: 0;padding:0;">
+			<div id="header" data-dojo-type="dijit.layout.ContentPane"  data-dojo-props="region:'top'">
+				<span style="font-size:50px;display:block;font-weight:bold;">Climate Wizard - China</span>
+			<!--	<span style="font-size: 16px;">Mapping future climate-induced changes to bird, amphibian, and mammal distributions in the Western Hemisphere</span> 
+				<img src="images/beta.gif" style="position:absolute;top:0;right:0;"/> -->
+			</div>
+			
+			
+			
+			
+			
+			<div id="centerDiv" data-dojo-type="dijit.layout.BorderContainer" data-dojo-props="region:'center',design:'headline',gutters:false" style="width: 100%; height: 100%; margin: 0;">
+				<div id="" data-dojo-type="dijit.layout.ContentPane"  data-dojo-props="region:'top'" style="height:200px;padding: 8px 0;margin:0;">
+					<div id="centerDiv_options"  class="round shadow" style="background-color: #F7F7F7;padding:4px;margin:0 auto;width:900px;border:0px solid #e00;">
+						<table style="width:100%;height:190px;" cellpadding="0" cellspacing="0">
+							<tr>
+								<td style="width:50px;padding:0;margin:0;font-size: 18px;">
+								<div class="imagecard transitions" id="historical_card" style="padding:8px 5px;" onclick="chooseOption('historical');">			
+									Historical
+								</div>
+								<div class="imagecard transitions" id="future_card" style="padding:8px;margin:3px 0;" onclick="chooseOption('future');">
+									Future
+								</div></td>
+								<td class="round-right" style="background-color: #DEDEDE;padding:0 3px;margin-right:5px;">
+								<table style="width: 100%;height:100%;" cellpadding="0" cellspacing="0">
+									<tr>
+										<td style="width:280px;padding-left:10px;overflow:hidden;vertical-align: middle;"> <span id="specific_species_container"> <span style="margin:0 0 5px 0;display:block">
+
+										<label class="title" for="timecombo">Time Options <img id="specificspeciestip" src="images/help.png" class="tip"/></label> </span> <label class="block" for="timecombo">Select a Month, a Season, or Annual: </label>
+											<select id="timecombo" data-dojo-id="timecombo" data-dojo-type="dijit.form.FilteringSelect">
+											<option value="Annual" selected>Annual</option>
+											<option value="Dec_Feb">Dec-Feb</option>
+											<option value="March_May">March-May</option>
+											<option value="June_Aug">June-Aug</option>
+											<option value="Sept_Nov">Sept-Nov</option>
+											<option value="January">January</option>
+											<option value="February">February</option>
+											<option value="March">March</option>
+											<option value="April">April</option>
+											<option value="May">May</option>
+											<option value="June">June</option>
+											<option value="July">July</option>
+											<option value="August">August</option>
+											<option value="September">September</option>
+											<option value="October">October</option>
+											<option value="November">November</option>
+											<option value="December">December</option>
+											</select> 
+											
+							 <span style="margin:8px 0;display:block;vertical-align: top" id="futureoptions">																						<br>
+							 				<br>
+											<input type="radio" data-dojo-type="dijit.form.RadioButton" id="midRadio" data-dojo-props='name:"time_category", value:"mid", checked:true, onClick:changeCategory'/>
+											
+											<label class="title" for="midRadio">Mid Century (2040-2069)<img id="percentlosstip" src="images/help.png" class="tip"/></label> 
+											<br>																											
+											<input type="radio" data-dojo-type="dijit.form.RadioButton" id="endRadio" data-dojo-props='name:"time_category", value:"end", checked:false, onClick:changeCategory'/>
+											<label class="title" for="endRadio">End Century (2070-2099)<img id="percentlosstip" src="images/help.png" class="tip"/></label> </span> 
+											
+											</td>
+										<td style="text-align:center;"> <img id="ordividerimage" src="images/divider.png" style="vertical-align: middle"/> </td>
+										<td style="width:180px;padding-left:10px;overflow:hidden;vertical-align: middle;">
+											<span style="margin:8px 0;display:block;vertical-align: top">																						
+											<input type="radio" data-dojo-type="dijit.form.RadioButton" id="preRadio" data-dojo-props='name:"cv_category", value:"percLoss", checked:false, onClick:changeCategory'/>
+											<label class="title" for="preRadio">Precipitation<img id="percentlosstip" src="images/help.png" class="tip"/></label> </span> 
+											<span style="margin:8px 0;display:block">
+											<input type="radio" data-dojo-type="dijit.form.RadioButton" id="tempRadio" data-dojo-props='name:"cv_category", value:"percGain", checked:true, onClick:changeCategory'/>
+											<label class="title" for="tempRadio">Temperature<img id="percentgaintip" src="images/help.png" class="tip"/></label> </span> 
+											 <span style="padding: 0px"><img id="ordividerimage" src="images/hrdivider.png" style="vertical-align: middle"/></span>
+											 
+											<span style="margin:8px 0;display:block"> <span id="mapofchange">
+											<input type="radio" data-dojo-type="dijit.form.RadioButton" id="changeRadio" data-dojo-props='name:"map_category", value:"turnover", checked:false, onClick:changeCategory'/>
+											
+											<label class="title" for="changeRadio">Map of Change<img id="turnovertip" src="images/help.png" class="tip"/></label></span> </span>
+											<span style="margin:8px 0;display:block">
+											<input type="radio" data-dojo-type="dijit.form.RadioButton" id="averageRadio" data-dojo-props='name:"map_category", value:"richness", checked:true, onClick:changeCategory'/>
+												<label class="title" for="averageRadio">Map of Average<img id="totalrichnesstip" src="images/help.png" class="tip"/></label>
+											</span>
+										</td>
+										
+										<td style="padding: 0 10px; text-align:center;"> <img id="ordividerimage" src="images/divider.png" style="vertical-align: middle"/> </td>
+										</td>	
+										
+										<td style="width:180px;padding-left:10px;overflow:hidden;vertical-align: middle;">
+										
+										<label class="title" for="provcombo">Zoom to Province<img id="protip" src="images/help.png" class="tip"/></label> <br>
+										
+										<select id="provcombo" data-dojo-id="provcombo" data-dojo-type="dijit.form.Select" style="position:absolute; font-size:17px; left:55px; top:12px; z-Index:500; width:100px" data-dojo-props="onChange:zoomto">
+										
+										<option value="All">Entire Region of China</option>
+										</select> <br>
+										
+											<span style="margin:8px 0;display:block;vertical-align: top" id="modem">																						
+											 <span style="padding: 0px"><img id="ordividerimage" src="images/hrdivider.png" style="vertical-align: middle"/></span><br>
+						
+											<label class="title" for="modelcombo">Model<img id="percentlosstip" src="images/help.png" class="tip"/></label> 
+											<select id="modelcombo" data-dojo-id="modelcombo" data-dojo-type="dijit.form.FilteringSelect">
+											  <option value="ensemble" selected>Ensemble</option>
+											  <option value="RegCM3">RegCM3</option>
+											</select> 
+											
+											<span style="margin:8px 0;display:block">
+											
+											
+											
+											<label class="title" for="emcombo">Emission Scenarios<img id="percentgaintip" src="images/help.png" class="tip"/></label> </span> 
+										  <select id="emcombo" data-dojo-id="emcombo" data-dojo-type="dijit.form.FilteringSelect">
+											<option value="A2" >High A2</option>
+											<option value="A1B" selected>Medium A1B</option>
+											<option value="B1">Low B1</option>
+											</select> 
+										
+										</span> 	
+										</td>
+										
+									
+										
+																	
+								</tr>
+								</table>
+								<!--
+								<a style="margin-top:8px;padding-top:3px;display:block;border-top:1px dashed
+								#CECECE;font-size:14px;text-align:right;" href="#" onclick="alert('Coming
+								Soon')">Advanced Filter Tool</a>
+								-->
+								</td>
+								
+							</tr>
+						</table>
+					</div>
+				</div>
+				
+			
+				<div id="centerDiv_map" data-dojo-type="dijit.layout.ContentPane"  data-dojo-props="region:'center'" style="margin:0;padding:0;">
+											
+					<img id="loadingImage" class='shadow' src="images/loading6.gif" style="display:none;position:absolute;top:50px;right:120px;width:109px;height:16px;z-index:99;border:none;"/>
+					<div id="dropdowner" class="textshadow round shadow" style="position:absolute; font-size:17px; right:5px; top:2px; z-Index:99;" dojoType="dijit.form.DropDownButton" label="Basemap Picker" style="" showLabel="true" iconClass="">
+						<div id="tooltipper" class="textshadow" dojotype="dijit.TooltipDialog" style="max-width:400px;" title="Choose your basemap" execute="">
+							<div class="textshadow" id="basemapGallery">
+							</div>
+						</div>	
+					</div>	
+					
+					<div class="textshadow round shadow" style="display:none;position:absolute; font-size:17px; right:5px; top:45px; z-Index:99;" dojoType="dijit.form.Button" label="Get Values" style="" showLabel="true" iconClass="" onclick="getCellValues()">
+					</div>
+					<span id="cmap_info" class="textshadow round shadow" style="display:none;background-color:#DEDEDE;font-size:18px;text-align:center;padding:5px;z-index:99;position:absolute;top:5px;right:165px;"> Loading ..... </span>
+					<span id="cmap_credits" class="" style='font-family:"Helvetica Neue", Helvetica, Arial;font-size:11px;color:#555;position:absolute;left:10px;bottom:2px;z-index:99;'> Data Source: Data source information to go here</span>
+					<span class="legend round shadow" id="cmap_legend" style="z-index:99;position:absolute;left:10px;bottom:20px;width:220px;">
+					  <!--	<fieldset id="infobox" class="round" style="margin-bottom:5px;padding:0 5px;">
+							<legend style="margin-left:10px;">
+								Species Info
+							</legend>  
+							<div id="infobox_content" class="" style="vertical-align: top;overflow: hidden; font-family: 'Helvetica Neue, Helvetica, Arial;'; font-size:13px; color:#555;">
+							</div>  
+						</fieldset>-->
+						<fieldset class="round" style="margin:0 0 5px 0;padding:0">
+							<legend style="margin-left:10px;">
+								Legend
+							</legend>
+							<center> <img id="legend_image" style="width:140px;border:0;vertical-align: middle;" src="images/legends/temp_mean.png"/> </center>
+						</fieldset>
+						<fieldset class="round" style="margin:0;padding:0 0 15px 0;">
+							<legend style="margin-left:10px;">
+								Opacity
+							</legend>
+							<div id="slider1" data-dojo-type="dijit.form.HorizontalSlider" data-dojo-props='name:"horizontal1",onChange:function(val){changeTransparency(val)},value:0.7,maximum:1,minimum:0,pageIncrement:100,showButtons:true,intermediateChanges:true,slideDuration:500,style:{width:"100%", height:"20px", margin: "0 auto", padding: "0 0 10px 0"}'>
+								<ol data-dojo-type="dijit.form.HorizontalRuleLabels" data-dojo-props='labelStyle:"font-style:monospace;font-size:8pt;fontSize:8px;margin:0px;padding-bottom:3px;"'>
+									<li>
+										0
+									</li>
+									<li>
+										50%
+									</li>
+									<li>
+										100%
+									</li>
+								</ol>
+							</div>
+						</fieldset> </span>
+					<span class="legend round shadow" id="chartdiv" style="z-index:99;position:absolute;right:10px;bottom:35px;display:none;width:310px;height:210px;padding:0px;"> <img src="images/close.png" style="cursor:pointer;width:26px;height:26px;position:absolute;top:0;right:0;z-index:99;" onclick="hideChart();" alt="Click to close" title="Click to close" /> <span id="chartcont" style="width:100%;height:100%;"></span> </span>
+
+				</div>
+			</div>
+			<div id="footer" data-dojo-type="dijit.layout.ContentPane"  data-dojo-props="region:'bottom'">
+				<div style='position:absolute;right:5px;bottom:5px;font-size:12px;font-family: "Helvetica Neue", Helvetica, Arial;'>
+					<span id="coordsinfo" style="padding: 0 5px 0 0;"></span>&nbsp;|&nbsp;<span id="scaleinfo" style="padding: 0 5px;"></span>
+				</div>
+				<a href="#" target="_blank" title="Link opens in new window" onclick="alert('not implemented')">About</a>
+			</div>
+		</div>
+		<script async type="text/javascript" src="javascript/data.json"></script>
+		<script type="text/javascript" src="http://serverapi.arcgisonline.com/jsapi/arcgis/?v=2.8compact"></script>
+		<script type="text/javascript" src="javascript/app.js?v1.0"></script>
+		<script>
+			dojo.require("dijit.dijit");
+			dojo.require("dijit.layout.BorderContainer");
+			dojo.require("dijit.layout.ContentPane");
+			dojo.require("esri.map");
+			dojo.require("esri.layers.agsimageservice");
+			dojo.require("esri.tasks.query");
+			dojo.require("esri.tasks.gp");
+			//dojo.require("esri.dijit.Popup");
+			dojo.require("dijit.form.HorizontalSlider");
+			//dojo.require("dijit.form.HorizontalRule");
+			dojo.require("dijit.form.HorizontalRuleLabels");
+			dojo.require("dijit.form.Select");
+			dojo.require("dijit.form.RadioButton");
+			dojo.require("dijit.form.Button");
+			dojo.require("dijit.form.FilteringSelect");
+			dojo.require("dojo.data.ItemFileReadStore");
+			dojo.require("dijit.Dialog");
+			dojo.require("esri.dijit.BasemapGallery");
+			dojo.require("dijit.TooltipDialog");
+			//Call init in app.js
+			dojo.ready(init);
+		</script>
+		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+		<script type="text/javascript">
+			//charting
+			google.load('visualization', '1', {
+				'packages' : ['corechart']
+			});
+		</script>
+	</body>
+</html>

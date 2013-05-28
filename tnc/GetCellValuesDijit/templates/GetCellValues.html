@@ -1,0 +1,17 @@
+<div id="${id}" widgetsInTemplate="true" class="dijit dijitReset dijitLeft dijitInline" style="width:775px; height:550px; overflow:hidden;">
+  <div id="${id}.containerNode" dojoAttachPoint="containerNode" widgetsInTemplate="true" dojotype="dijit.layout.BorderContainer" title="Model Values" class="dijit dijitReset dijitLeft dijitInline" style="width:775px; height:550px; overflow:hidden;">
+    <div dojotype="dijit.layout.ContentPane" region="top" style="height:40px; overflow:hidden;">
+      <center>
+        <span id="${id}.identifyGPStatus" dojoAttachPoint="identifyGPStatus"></span>
+        <img id="${id}.identifyBusy" dojoAttachPoint="identifyBusy" src="./images/busy.gif" align="absmiddle" />
+      </center>
+    </div>
+    <div id="${id}.identifyChartParent" dojoAttachPoint="identifyChartParent" dojotype="dijit.layout.BorderContainer" region="center" design="sidebar">
+      <div id="${id}.identifyResultsTable" dojoAttachPoint="identifyResultsTable" dojotype="dijit.layout.ContentPane" region="right" style="width:240px;"></div>
+      <div dojotype="dijit.layout.ContentPane" region="center" style="overflow:hidden;">
+        <div id="${id}.identifyChartNode" dojoAttachPoint="identifyChartNode" style="width:450px; height:400px; overflow:hidden; text-align:left;"></div>
+      </div>
+      <div id="${id}.identifyChartLegendNodeParent" dojoAttachPoint="identifyChartLegendNodeParent" dojotype="dijit.layout.ContentPane" region="bottom" style="height:30px; text-align:left;"></div>
+    </div>
+  </div>
+</div>

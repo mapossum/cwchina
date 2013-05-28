@@ -1,0 +1,79 @@
+﻿//return GetServiceDef(callback);
+           
+            /*
+            if (!String.IsNullOrWhiteSpace(f) && f.Trim().Equals("json",StringComparison.InvariantCultureIgnoreCase)) {
+
+                return GetServiceDef(callback); //json
+            }
+
+            if (RouteData.Values["param"] != null)
+            {
+                string where = RouteData.Values["param"].ToString().Trim();
+            } 
+             */
+            
+            //ViewBag.controller = RouteData.Values["controller"].ToString();
+            //ViewBag.action = RouteData.Values["action"].ToString();
+            //ViewBag.controller = Request.Url.PathAndQuery.ToString();
+            //ViewBag.action = Request.Url.Segments;
+            //ViewBag.ids = Request.Url.Query.ToString(); ;            
+            //return View("Error");            
+        
+            //return View(); //html
+
+
+
+
+            //TO HANDLE SUB-LAYERS
+             if (!String.IsNullOrWhiteSpace(layers) && layers.Contains("show:"))
+            {
+                string show = layers.Split(':')[1];
+                if (show != null && show.Split(',').Length > 0)
+                {
+                    where = show.Split(',')[0];
+                }
+
+            }
+
+
+
+
+            public class Service
+    {        
+        private ServiceDefinition serviceDef;
+        private RestTemplates.DocumentInfo docInfo;        
+        
+        Service(string title, string keywords, string comments, string author, string name, double version, string description, string copyright, RestTemplates.ServiceExtent extent, int wkid, string units, List<RestTemplates.ServiceLayer> layers)
+        {
+            docInfo = new RestTemplates.DocumentInfo { title=title, Keywords=keywords, Author=author,Category="", Comments=comments,Subject=title};
+            serviceDef = new ServiceDefinition
+            {
+                currentVersion = version,
+                serviceDescription = description,
+                description = description,
+                mapName = name,
+                copyrightText = copyright,
+                layers = layers.ToArray(),
+                spatialReference = new RestTemplates.SpatialRef { wkid=wkid },
+                singleFusedMapCache = false,
+                initialExtent = extent,
+                fullExtent = extent,
+                units = units,
+                capabilities ="MAP",
+                supportedImageFormatTypes = "PNG",
+
+            };
+        }
+       
+        public string getJson(string callback)
+        {
+            JavaScriptSerializer javaScriptSerializer = new JavaScriptSerializer();            
+
+            if (String.IsNullOrWhiteSpace(callback))
+            {
+                return javaScriptSerializer.Serialize(serviceDef);
+            }
+            
+            return callback + "(" + javaScriptSerializer.Serialize(serviceDef) + ")";
+        }
+    }

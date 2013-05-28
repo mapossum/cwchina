@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=7" />
+    <title>Global Climate Change</title>
+    <script type="text/javascript">
+      var djConfig = {
+        parseOnLoad: true
+      }
+    </script>
+    <style type="text/css">
+      @import "http://serverapi.arcgisonline.com/jsapi/arcgis/1.5/js/dojo/dijit/themes/tundra/tundra.css";
+    </style>
+    <script type="text/javascript" src= "http://serverapi.arcgisonline.com/jsapi/arcgis/?v=1.5"></script>
+    <link type="text/css" rel="stylesheet" href="ClimateChange.css">
+    <script type="text/javascript" src="ClimateChange.js"></script>
+  </head>
+  <body class="tundra" style="color:seagreen; font-family:Tahoma;">
+    <div id="mainWindow" dojotype="dijit.layout.BorderContainer" design="headline" gutters="false" style="width:100%; height:100%; padding:15px;">
+      
+			<div id="header" dojotype="dijit.layout.BorderContainer" region="top" design="headline" gutters="false" style="height:90px; padding:3px;">
+        <div id="headerImage" dojotype="dijit.layout.ContentPane" region="left" style="padding:5px;">
+          <img src="./images/TNCLogo2.gif" title="The Nature Conversancy" height="60px" style="cursor:pointer;" onclick="window.open('http://www.tnc.org/');"/>
+        </div>
+        <div dojotype="dijit.layout.ContentPane" region="center" style="padding-top:15px; overflow:hidden; text-align:center;">
+          <span style="font-size:22pt;">Global Climate Change</span>
+          <br/>
+          <span style="font-size:small;">TNC and ESRI</span>
+        </div>
+        <div dojotype="dijit.layout.BorderContainer" region="right" design="sidebar" gutters="false" style="width:200px;">
+          <div dojotype="dijit.layout.ContentPane" region="top" style="padding-top:5px;">
+            <img src="./images/Univ_Wash_logo.png" height="30px" title="University of Washington" style="cursor:pointer;" onclick="window.open('http://www.washington.edu/');"/>
+          </div>
+          <div dojotype="dijit.layout.ContentPane" region="bottom">
+            <img src="./images/Univ_SMiss_logo.png" height="30px" title="University of Sourthern Mississippi" style="cursor:pointer;" onclick="window.open('http://www.usm.edu/index.php');"/>
+          </div>
+          <div dojotype="dijit.layout.ContentPane" region="left" style="padding-top:15px;">
+            <img src="./images/esri.gif" title="ESRI" height="50px" style="cursor:pointer;" onclick="window.open('http://www.esri.com/');"/>
+          </div>
+        </div>
+      </div>
+			
+      <div id="leftPane" dojoType="dijit.layout.AccordionContainer" region="left" splitter="true" style="width:375px;">
+        <div id="tempDiffPane" dojoType="dijit.layout.AccordionPane" title="Temperature Difference" selected="true" style="padding:6px;">
+          <div dojotype="dijit.form.Button" onclick="toggleAnimation();" style="width:100px; color:darkred;">
+            <div id="animateLayerBtnLabel" style="width:100px;">Animate</div>
+          </div>
+          <center>
+            <div id="yearLabel" style="font-size:large; color:red;" onclick="changeTransp();">2050</div>
+          </center>
+          <div id="animationSlider" dojoType="dijit.form.HorizontalSlider" showButtons="true" value="2025" minimum="1990" maximum="2099" discreteValues="110" intermediateChanges="false" onChange="yearChange(arguments[0]);" style="margin:5px">
+            <div dojoType="dijit.form.HorizontalRuleLabels" container="topDecoration" labels="1990,2099" style="height:1.2em;font-size:80%;color:darkblue"></div>
+            <div dojoType="dijit.form.HorizontalRule" id="sliderRule" container="bottomDecoration" count="19" style="height:8px;"></div>
+            <ol dojoType="dijit.form.HorizontalRuleLabels" container="bottomDecoration" style="height:1em;font-size:75%;color:darkblue;">
+              <li></li>
+              <li>2017</li>
+              <li></li>
+              <li>2072</li>
+              <li></li>
+            </ol>
+          </div>
+          <br/>
+          <center>
+            <span style="font-size:13pt;">Temperature Change (F)</span>
+            <br/>
+            <span style="font-size:11pt;">Average Global Ensemble</span>
+            <br/>
+            <span style="font-size:9pt;">From 1961-1990 Baseline</span>
+            <br/>
+            <img src="./images/legend_yellow_red.png" style="margin:10px;"/>
+          </center>
+        </div>
+      </div>
+      <div id="centerDiv" region="center" splitter="true" dojotype="dijit.layout.BorderContainer" design="headline" gutters="false">
+        <div id="mapParentDiv" region="center" splitter="true" dojotype="dijit.layout.BorderContainer" design="headline" gutters="false">
+          <div id="toolbarsDiv" dojotype="dijit.layout.BorderContainer" region="top" design="sidebar" gutters="false" style="height:30px;">
+            <div id="navToolbarDiv" dojotype="dijit.Toolbar" region="left" style="width:70%">
+              <div dojoType="dijit.form.DropDownButton">
+                <span>Climate Change @ ESRI</span>
+                <div dojoType="dijit.Menu">                  
+                  <div dojoType="dijit.MenuItem" label="GIS for Environmental Management: Climate Change" onclick="window.open('http://www.esri.com/industries/environment/business/climate_change.html');"></div>
+                  <div dojoType="dijit.MenuItem" label="Earth Observation and GIS Industries Take Action Against Climate Change" onclick="window.open('http://www.esri.com/news/arcnews/fall07articles/earth-observation.html');"></div>
+                  <div dojoType="dijit.MenuItem" label="GIS Best Practices: GIS for Climate Change" onclick="window.open('http://www.esri.com/library/bestpractices/climate-change.pdf');"></div>
+                  <div dojoType="dijit.MenuItem" label="<b>*** Search ESRI for Climate Change Resources... ***</b>" onclick="window.open('http://search.esri.com/results.cfm?h=10&ho=0&q=climate+change&sa=Search');"></div>
+                </div>
+              </div>
+              <span dojoType="dijit.ToolbarSeparator"></span>
+              <div dojoType="dijit.form.Button" id="navZoomFullBtn" iconClass="iconZoomFull" showLabel="false" label="Zoom Full Extent" onClick="navToolbar.zoomToFullExtent();"></div>
+              <div dojoType="dijit.form.Button" id="navZoomInitialBtn" iconClass="iconZoomInitial" showLabel="false" label="Zoom Initial Extent" onClick="map.setExtent(initialExtent);"></div>
+              <div dojoType="dijit.form.Button" id="navZoomINBtn" iconClass="iconZoomIn" showLabel="false" label="Zoom In" onClick="navToolbar.activate(esri.toolbars.Navigation.ZOOM_IN);"></div>
+              <div dojoType="dijit.form.Button" id="navZoomOUTBtn" iconClass="iconZoomOut" showLabel="false" label="Zoom Out" onClick="navToolbar.activate(esri.toolbars.Navigation.ZOOM_OUT);"></div>
+              <div dojoType="dijit.form.Button" id="navZoomPANBtn" iconClass="iconZoomPan" showLabel="false" label="Pan" onClick="navToolbar.activate(esri.toolbars.Navigation.PAN);"></div>
+              <div dojoType="dijit.form.Button" id="navZoomPrevBtn" iconClass="iconZoomPrev" showLabel="false" label="Zoom Previous" onClick="navToolbar.zoomToPrevExtent();"></div>
+              <div dojoType="dijit.form.Button" id="navZoomNextBtn" iconClass="iconZoomNext" showLabel="false" label="Zoom Next" onClick="navToolbar.zoomToNextExtent();"></div>
+            </div>
+            <div id="baseLayerToolbarDiv" dojotype="dijit.Toolbar" region="right" style="width:30%; text-align:right; font-size:larger">
+              <div dojotype="dijit.form.Button" id="StreetMapBtn" showlabel="true" label="Street Map" onclick="toggleBaseLayer('StreetMap');" style="color:seagreen;"></div>
+              <div dojotype="dijit.form.Button" id="TopoBtn" showlabel="true" label="Topo" onclick="toggleBaseLayer('Topo');" selected="true" style="color:darkred;"></div>
+              <div dojotype="dijit.form.Button" id="ImageryBtn" showlabel="true" label="Imagery" onclick="toggleBaseLayer('Imagery');" style="color:seagreen;"></div>
+            </div>
+          </div>
+          <!--CENTER MAP PANE-->
+          <div id="mapDiv" dojotype="dijit.layout.ContentPane" region="center" style="margin:3px; border:solid thin silver;"></div>
+          <!--BOTTOM COPYRIGHT TOOLBAR-->
+          <div id="creditsToolbarDiv" dojotype="dijit.Toolbar" region="bottom">
+            <div id="creditsDiv" style="text-align:right; padding-right:6px; font-size:x-small;">Copyright Info</div>
+          </div>
+        </div>
+      </div>
+      <div dojotype="dijit.layout.ContentPane" region="bottom" splitter="true" style="height:200px; border:solid thin silver; background-color:whitesmoke;">
+        <div style="margin:3px; padding:10px; font-size:medium;">
+          <span>Future projected change in mean temperature (F) from the 1961-1990 baseline average. Note that these maps are future climate projections from one (Average Ensemble climate model with A2 CO2 emissions scenario) of many available scientifically-based global climate models. </span>
+          <br/>
+          <br/>
+          <span>Global climate model output, from the World Climate Research Programme's (WCRP's) Coupled Model Intercomparison Project phase 3 (CMIP3) multi-model dataset (Meehl et al., 2007), were downscaled as described by Maurer et al. (2009) using the bias-correction/spatial downscaling method (Wood et al., 2004) to a 0.5 degree grid, based on the 1950-1999 gridded observations of Adam and Lettenmaier (2003).  Additional information can be found at the <a href="http://www.engr.scu.edu/~emaurer/global_data/" target="_blank"> Globally Downscaled Climate Data</a> page.</span>
+          <br/>
+          <br/>
+          <span>Data Courtesy of <a href="http://www.engr.scu.edu/~emaurer/" target="_blank">Dr. Edwin Maurer, Santa Clara University</a></span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

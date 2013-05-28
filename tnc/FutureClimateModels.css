@@ -1,0 +1,88 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    overflow: hidden;
+    font-family: "Trebuchet MS";
+    background-color: #E4E6D7;
+} #header {
+    color: seagreen;
+    font-size: 19pt;
+    font-weight: bold;
+    text-align: center;
+    padding: 20px;
+} .gridContainerTable, .gridContainer, .gridContainerZone {
+    border-collapse: collapse;
+    border: 2px solid #ededed !important;
+    padding: 1px !important;
+} .scenarioNamePane {
+    padding: 1px;
+    text-align: center;
+    font-size: x-small;
+    color: seagreen;
+} .scenarioInfo {
+    padding: 3px !important;
+    background-color: whitesmoke;
+    font-size: small;
+    color: seagreen;
+    border: solid thin silver;
+} .scenarioPreviewPane {
+    height: 130px;
+    width: 260px;
+    background-color: whitesmoke;
+    border: solid thin seagreen;
+    margin: 10px;
+    overflow: hidden !important;
+} .scenarioImg {
+    width: 100% !important;
+    height: 100% !important;
+    align: absmiddle !important;
+} .iconZoomFull {
+    width: 16px;
+    height: 16px;
+    background: no-repeat url('./images/zoom_full_16.png');
+} .iconIdentify {
+    width: 16px;
+    height: 16px;
+    background: no-repeat url('./images/identify-16x16.png');
+} .iconArcMap {
+    width: 16px;
+    height: 16px;
+    background: no-repeat url('./images/mxd.gif');
+} .iconExplorer {
+    width: 16px;
+    height: 16px;
+    background: no-repeat url('./images/explorer.png');
+} .iconGE {
+    width: 16px;
+    height: 16px;
+    background: no-repeat url('./images/ge.png');
+} .iconSync {
+    width: 16px;
+    height: 16px;
+    background: no-repeat url('./images/Synchronize16.png');
+} .iconClearSync {
+    width: 16px;
+    height: 16px;
+    background: no-repeat url('./images/ClearSynchronize16.png');
+} .iconExpand {
+    width: 16px;
+    height: 16px;
+    background: no-repeat url('./images/GreenPlus.png');
+} .iconCollapse {
+    width: 16px !important;
+    height: 16px !important;
+    background: center no-repeat url('./images/GreenMinus.png') !important;
+} .iconClear {
+    width: 16px;
+    height: 16px;
+    background: no-repeat url('./images/delete-folder_16x16.png');
+}
+
+
+
+

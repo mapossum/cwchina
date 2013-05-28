@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /arcgis/
+Disallow: /ArcGIS/
+Disallow: /ARCGIS/
+Disallow: /*/rest/
+Disallow: /*/services/
+Disallow: /*/*/services/
+Allow: /

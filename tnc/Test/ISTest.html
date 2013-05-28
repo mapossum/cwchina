@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content= "text/html; charset=utf-8">
+        <title>Image Server Test</title>
+        <link rel="stylesheet" type="text/css" href="ISTest.css">
+        <link rel="stylesheet" type="text/css" href= "http://serverapi.arcgisonline.com/jsapi/arcgis/1.5/js/dojo/dijit/themes/nihilo/nihilo.css">
+        <script type="text/javascript">
+            var djConfig = {
+                parseOnLoad: true,
+                isDebug: true,
+                debugAtAllCosts: true
+            }
+        </script>
+        <script type="text/javascript" src="http://serverapi.arcgisonline.com/jsapi/arcgis/?v=1.5"></script>
+        <script type="text/javascript" src="ISTest.js"></script>
+				<script type="text/javascript" src="http://maps.esri.com/AGSJS_Demos/TNC/GetCellValuesDijit/GetCellValues.js"></script>
+        <script type="text/javascript" src="../resources/APLClimateChangeLayer.js"></script>
+        <script type="text/javascript">
+            dojo.require("dijit.layout.BorderContainer");
+            dojo.require("dijit.layout.ContentPane");
+            dojo.require("dijit.form.TextBox");
+            dojo.require("dijit.form.Button");
+            dojo.require("dijit.form.Textarea");
+            dojo.require("dijit.Dialog");
+            dojo.require("dijit.layout.BorderContainer");
+            dojo.require("dijit.layout.ContentPane");
+            dojo.require("dojo.parser");
+        </script>
+    </head>
+    <body class="nihilo">
+        <!--TOPMOST LAYOUT CONTAINER-->
+        <div id="mainWindow" dojotype="dijit.layout.BorderContainer" design="headline" gutters="false" style="width:100%; height:100%;">
+            <div id="header" dojotype="dijit.layout.ContentPane" region="top" style="height:40px;">Image Server Test</div>
+            <div dojotype="dijit.layout.BorderContainer" region="center">
+                <div dojotype="dijit.layout.ContentPane" region="top" style="height:40px; text-align:center;">
+                    Image Name: <input id="imageName" type="text" dojotype="dijit.form.TextBox" value="" style="width:400px;"/>
+                    <div id="getImage" dojoType="dijit.form.Button" onClick="getImage();">Get Image</div>
+                </div>
+                <div dojotype="dijit.layout.BorderContainer" region="center">
+                    <div dojotype="dijit.layout.BorderContainer" region="left" splitter="true" style="width:600px;">
+                        <div dojotype="dijit.layout.ContentPane" region="top" style="height:225px;">
+                            <span style="font-weight:bold;">Change Current Scenario Options here:</span>
+														<textarea id="scenarioOptionsNode" dojoType="dijit.form.Textarea" style="width:100%; height:100%; border:dashed medium red;"></textarea>
+                        </div>
+												<div dojotype="dijit.layout.ContentPane" region="center">
+                            <span>SCENARIO OPTIONS</span>
+														<div style="font-size:small; background-color:whitesmoke;">
+                                <hr/>
+																** HISTORICAL ** 
+                                <br/>
+                                {MapOption}_{AnalyisArea}_{Measurement}_{Cycle}_{TimePeriod} 
+                                <br/>
+                                <br/>
+                                <b>MapOption:</b> mean, trend_change_rate, trend_pVal
+                                <br/>
+                                <b>AnalyisArea:</b> cru50k, prism
+                                <br/>
+                                <b>Measurement:</b> tmean, pptPct
+                                <br/>
+                                <b>Cycle:</b> 1-18 (except 13!)
+                                <br/>
+                                <b>TimePeriod:</b> 1951_2002, 1951_2006
+                                <br/><br/><hr/>
+                                ** FUTURE ** 
+                                <br/>
+                                {MapOption}_{AnalyisArea}_{Model}_{Scenario}_{Measurement}_{Cycle}_{TimePeriod} 
+                                <br/>
+                                * ENSAMBLE MODELS * 
+                                <br/>
+                                {MapOption}_{Model}_{AnalyisArea}_{Scenario}_{Measurement}_{Cycle}_{TimePeriod}
+                                <br/><br/>
+                                <b>MapOption:</b> mean, depart_change
+                                <br/>
+                                <b>AnalyisArea:</b> AR4_Global_50k, AR4_US_12k
+                                <br/>
+                                <b>Model:</b> cccma_cgcm3_1.1, etc... <span style="font-size:smaller;">(See ClimateModelsInfo.js for complete list.)</span>
+                                <br/>
+                                <b>Scenario:</b> a2, a1b, b1
+                                <br/>
+                                <b>Measurement:</b> tmean, pptPct
+                                <br/>
+                                <b>Cycle:</b> 1-18 (except 13!)
+                                <br/>
+                                <b>TimePeriod:</b> 2040_2069, 2070_2099
+																<hr/>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div id="mapDiv" dojotype="dijit.layout.ContentPane" region="center"></div>
+                </div>
+            </div>
+            <div id="footer" dojotype="dijit.layout.ContentPane" region= "bottom" style="height:30px;">...Image Server Test...</div>
+        </div>
+        <div id="identifyDlg" dojotype="dijit.Dialog" title="Identify" draggable="true" style="width:775px; height:575px; overflow:hidden;">
+            <div id="identifyChartPane" dojotype="dijit.layout.BorderContainer" title="Model Values" style="width:755px; height:525px; overflow:hidden; font-size:small;">
+                <div dojotype="dijit.layout.ContentPane" region="top" style="height:35px; overflow:hidden;">
+                    <center>
+                        <span id="identifyGPStatus"></span>
+                        <img id="identifyBusy" src="./images/busy.gif" align="absmiddle" />
+                    </center>
+                </div>
+                <div id="identifyChartParent" dojotype="dijit.layout.BorderContainer" region="center" design="sidebar">
+                    <div id="identifyResultsTable" dojotype="dijit.layout.ContentPane" region="right" style="width:240px;"></div>
+                    <div dojotype="dijit.layout.ContentPane" region="center" style="overflow:hidden;">
+                        <div id="identifyChartNode" style="width:450px; height:400px; overflow:hidden;"></div>
+                    </div>
+                    <div id="identifyChartLegendNodeParent" dojotype="dijit.layout.ContentPane" region="bottom" style="height:30px;"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
