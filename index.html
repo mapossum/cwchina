@@ -3,7 +3,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=7" />
-        <title>Climate Wizard- China</title>
+        <title>Climate Wizard - China</title>
         
         <script type="text/javascript">
             djConfig = {
@@ -66,6 +66,7 @@
 				dojo.require("dijit.Dialog");
 				dojo.require("esri.dijit.BasemapGallery");
 				dojo.require("dijit.TooltipDialog");     
+				dojo.require("dijit.TitlePane");
             
             var map, topoLayer, worldbaseLayer, climateChangeLayer, factoidsLayer, factoidsClickHandle, iTip;
             
@@ -532,8 +533,11 @@
                             <tr>
                               <div id="sliderDiv" style="z-index:999;background-color:#fff; padding:3px;border:1px solid #ccc;font-size:8pt;">
                                     <span style="text-align:center;padding-bottom:5px;display:block;">Change Transparency</span>
+                                    
                                     <span dojoType="dijit.form.HorizontalSlider" value="0.7" minimum="0" maximum="1" discreteValues="11" intermediateChanges="true" showButtons="false" style="width:180px;" onchange="changeOpacity"></span>
                                 </div>
+                                <span style="font-size:10px	"> To manually zoom in you may hold the shift key down while dragging a rectangle on the map.</span>
+                                <br>
                                 <br>
                             </tr>
                             <tr>
@@ -638,6 +642,13 @@
                         <!-- end of titlef -->
                         <div id="mappan">
                             <div class="tundra" id="mapdiv" style="width: 668px;height: 495px;">
+                            
+                                  <div style="position:absolute; right:20px; top:10px; z-Index:999;">
+        <div dojoType="dijit.TitlePane" title="Switch Basemap" closable="false"  open="false">
+          <div dojoType="dijit.layout.ContentPane" style="width:380px; height:280px; overflow:auto;">
+          <div id="basemapGallery" ></div></div>
+        </div>
+      </div>
                             
                             <img id="loadingImage" class='shadow' src="images/loading6.gif" style="display:none;position:absolute;top:50px;right:120px;width:109px;height:16px;z-index:99;border:none;"/>
 

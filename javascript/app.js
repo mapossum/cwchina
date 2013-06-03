@@ -583,7 +583,7 @@ function showCoords(ext) {
 	var pnt = esri.geometry.webMercatorToGeographic(ext.mapPoint || ext);
 	if (pnt === null || pnt === undefined)
 		return;
-	o.innerHTML = "Lat: " + pnt.y.toFixed(2) + "&nbsp;&nbsp;Lon: " + pnt.x.toFixed(2);
+	o.innerHTML = "Lat: " + pnt.y.toFixed(3) + "&nbsp;&nbsp;Lon: " + pnt.x.toFixed(3);
 }
 
 function onMapExtentChange() {

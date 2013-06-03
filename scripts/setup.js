@@ -560,7 +560,7 @@ function showCoords(val){
     var o = dojo.byId("coordsDiv");
     var ext = val.mapPoint || val;
     ext = esri.geometry.webMercatorToGeographic(ext);	
-    o.innerHTML = "Lat: " +  ext.y.toFixed(2) + "&#176;&nbsp;Lon: " + ext.x.toFixed(2) + "&#176;"; 
+    o.innerHTML = "Lat: " +  ext.y.toFixed(3) + "&#176;&nbsp;Lon: " + ext.x.toFixed(3) + "&#176;"; 
 }
 
 function okit(inputval){
