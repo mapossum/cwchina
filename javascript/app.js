@@ -150,9 +150,7 @@ function secondinit() {
 function selProv() {
 	
 	selfeats = provLayer.graphics;	
-	
-	//alert(selfeats)
-	
+		
 	
 	for (sel in selfeats) {
 		
@@ -183,13 +181,17 @@ function selProv() {
 
 function zoomto(val) {
 
-	selfeats = provLayer.graphics;	
+	selfeats = provLayer.graphics;
+	
+	//alert(val)	
 	
 	if (val == "All") {
 	
 	FeatureExtent = esri.graphicsExtent(selfeats);
 	
 	provLayer.clearSelection()
+	
+	pname = "CHINA"
 		
 	} else {
 
@@ -204,8 +206,23 @@ function zoomto(val) {
 	
 	}
 	
+	tradio = dijit.registry.byId('tempRadio');
+	
+	if (tradio.checked == true) {
+		tin = "temp"
+	} else {
+		tin = "precip"
+	}
+	
+	tcombo = dijit.registry.byId('timecombo');
+	
+	graphurl = "graphs" + "/" + tin + "/" + tcombo.value.replace("Annual","Yearly").replace("Dec_Feb","Winter").replace("March_May", "Spring").replace("June_Aug", "Summer").replace("Sept_Nov", "Fall") + "/" + pname.replace("HongKong", "Hong Kong") + ".png"
+	
+	
+	dojo.byId("graph_image").src = graphurl;
 	
 	map.setExtent(FeatureExtent, true);
+	
 	
 	
 }
@@ -402,6 +419,8 @@ function changeCategory(e) {
 		 zoomto(prcombo.value);
 		}
 		
+		
+		
 		cwcontentlayer.show();
 		provLayer.show();
 		
@@ -417,7 +436,6 @@ function changeCategory(e) {
 
 		
 	}
-	
 	
 	changemap();
 	
